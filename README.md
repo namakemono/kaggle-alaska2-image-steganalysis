@@ -57,6 +57,9 @@ cf. https://www.kaggle.com/c/alaska2-image-steganalysis/discussion/155392
 - 4: https://www.kaggle.com/c/alaska2-image-steganalysis/discussion/168537
 - 8: https://www.kaggle.com/c/alaska2-image-steganalysis/discussion/168519
 - 9: https://www.kaggle.com/c/alaska2-image-steganalysis/discussion/168608
+    - Model: EfficientNet x 5
+    - Augmentation: flip & 転置
+    - stride:(1,1)が重要
 - 12: https://www.kaggle.com/c/alaska2-image-steganalysis/discussion/168507
 	- ✅EfficientNet x 4, dropout:0.2, RTX6000, concat pooling, AdamW, cross entropy
 	- ❌TTA, ResNet/ResNeSt
@@ -64,14 +67,10 @@ cf. https://www.kaggle.com/c/alaska2-image-steganalysis/discussion/155392
 - 14: https://www.kaggle.com/c/alaska2-image-steganalysis/discussion/168611
 - 18: https://www.kaggle.com/c/alaska2-image-steganalysis/discussion/168771
 
-### Notebooks & Discussions
+### Other techniques
 
 - https://www.kaggle.com/c/alaska2-image-steganalysis/discussion/155392
     - どういう方法が有効か説明してくださっています．
-- https://www.kaggle.com/c/alaska2-image-steganalysis/discussion/168548
-    - 1位解法
-- https://www.kaggle.com/c/alaska2-image-steganalysis/discussion/168537
-    - 4位解法
 
 ## 類似コンペ
 
