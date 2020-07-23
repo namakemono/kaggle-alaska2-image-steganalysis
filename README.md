@@ -49,6 +49,21 @@ cf. https://www.kaggle.com/c/alaska2-image-steganalysis/discussion/155392
 
 ## References
 
+### Top Solutions
+
+- 1: https://www.kaggle.com/c/alaska2-image-steganalysis/discussion/168548
+- 2: https://www.kaggle.com/c/alaska2-image-steganalysis/discussion/146622
+- 3: https://www.kaggle.com/c/alaska2-image-steganalysis/discussion/168870
+- 4: https://www.kaggle.com/c/alaska2-image-steganalysis/discussion/168537
+- 8: https://www.kaggle.com/c/alaska2-image-steganalysis/discussion/168519
+- 9: https://www.kaggle.com/c/alaska2-image-steganalysis/discussion/168608
+- 12: https://www.kaggle.com/c/alaska2-image-steganalysis/discussion/168507
+	- ✅EfficientNet x 4, dropout:0.2, RTX6000, concat pooling, AdamW, cross entropy
+	- ❌TTA, ResNet/ResNeSt
+	- EfficientNetの最初のstrideを1に変更(デフォルトは2. 埋め込みの情報を潰さずにあとまで持っていくことが重要?)
+- 14: https://www.kaggle.com/c/alaska2-image-steganalysis/discussion/168611
+- 18: https://www.kaggle.com/c/alaska2-image-steganalysis/discussion/168771
+
 ### Notebooks & Discussions
 
 - https://www.kaggle.com/c/alaska2-image-steganalysis/discussion/155392
