@@ -26,7 +26,8 @@
 ## 方針
 
 - 元画像 or どの埋め込みアルゴリズム化を判定する多クラスのネットワークを作って判定
-
+- EfficientNetが有効.
+- Augmentationは反転や90度回転など情報を潰さない手法のみ有効
 
 ## 知見
 
@@ -59,7 +60,21 @@ cf. https://www.kaggle.com/c/alaska2-image-steganalysis/discussion/155392
     - Augmentations: Rotation 90, Flip, CutMix
     - Training: 65000x4/10000x4(train/validation). 3,4,6,7にデータを分割して学習
     - note: DCTモデルの性能は低い(〜0.87)が，YCbCrモデルとのアンサンブルで性能が改善
-- 2: https://www.kaggle.com/c/alaska2-image-steganalysis/discussion/146622
+- 2: https://www.kaggle.com/c/alaska2-image-steganalysis/discussion/168546
+    - Models
+        - EfficientNet
+            - B6,B7
+            - activationをSwishからMishに変更
+                - cf. https://arxiv.org/ftp/arxiv/papers/1908/1908.08681.pdf
+    - Augmentation
+        - Dropout
+        - D4 augmentation(90度ごとに回転させてTTA)
+            - cf. https://github.com/BloodAxe/pytorch-toolbelt/blob/d8a7d25c887c5f1c9a6c8e07e8b887bc6fc4617c/pytorch_toolbelt/inference/tta.py#L154
+    - Loss:
+        - BCE, CEが最善
+    - ❌
+        - DCTでの学習
+        - ResNet & DenseNet
 - 3: https://www.kaggle.com/c/alaska2-image-steganalysis/discussion/168870
 - 4: https://www.kaggle.com/c/alaska2-image-steganalysis/discussion/168537
 - 8: https://www.kaggle.com/c/alaska2-image-steganalysis/discussion/168519
@@ -75,11 +90,6 @@ cf. https://www.kaggle.com/c/alaska2-image-steganalysis/discussion/155392
 - 14: https://www.kaggle.com/c/alaska2-image-steganalysis/discussion/168611
 - 18: https://www.kaggle.com/c/alaska2-image-steganalysis/discussion/168771
 
-### Other techniques
-
-- https://www.kaggle.com/c/alaska2-image-steganalysis/discussion/155392
-    - どういう方法が有効か説明してくださっています．
-
-## 類似コンペ
+### 類似コンペ
 
 
