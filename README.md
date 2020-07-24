@@ -18,6 +18,8 @@
 ## データ
 
 - 元画像75kと埋め込みアルゴリズムごとに75k
+- すべての画像サイズは512x512
+- 隠しメッセージの長さ等で類推されないよう色々と工夫あり
 
 ### 制約条件
 
@@ -25,7 +27,7 @@
 
 ## 注意事項
 
-- 学習に非常に時間がかかる. 2.5時間/epochぐらいはかかる
+- 学習に非常に時間がかかる(EfficientNet B4で2.5時間/epochぐらい)
 
 ---
 
@@ -37,7 +39,7 @@
 
 ## Tips
 
-- Starger Kernel
+- 🚀Starger Kernel
     - https://www.kaggle.com/shonenkov/train-inference-gpu-baseline
     - https://www.kaggle.com/c/alaska2-image-steganalysis/discussion/155392
 - ❌やっちゃだめなこと
@@ -98,6 +100,22 @@
     - ❌TTA, ResNet/ResNeSt(1位はSE ResNetを使用)
     - env: RTX6000
 - 14: https://www.kaggle.com/c/alaska2-image-steganalysis/discussion/168611
+    - Author: Μαριος Μιχαηλιδης KazAnova
+    - Models:
+        - EfficientNet: B4, B5
+        - epochs: 150
+    - Augmentations:
+        - 反転
+        - 反転+転置+回転
+        - 反転+転置+回転+Cutout(1箇所, size: 80)
+        - 反転+転置+回転+Cutout(2箇所, size: 64)
+    - Training Techniques:
+        - Train:Validation = 8:2
+        - ❓ epoch経過ごとにoptimizerの入れ替え
+    - TTA
+        - 垂直, 水平, 垂直&水平
+    - References
+        - CutOut: https://arxiv.org/abs/1708.04552
 - 18: https://www.kaggle.com/c/alaska2-image-steganalysis/discussion/168771
     - Models:
         - EfficientNet: 
