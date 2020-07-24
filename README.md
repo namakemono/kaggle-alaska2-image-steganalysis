@@ -23,16 +23,23 @@
 
 ---
 
+## 注意事項
+
+- 学習に非常に時間がかかる. 2.5時間/epochぐらいはかかる
+
+---
+
 ## 方針
 
 - 元画像 or どの埋め込みアルゴリズム化を判定する多クラスのネットワークを作って判定
 - EfficientNetが有効.
 - Augmentationは反転や90度回転など情報を潰さない手法のみ有効
 
-## 知見
+## Tips
 
-cf. https://www.kaggle.com/c/alaska2-image-steganalysis/discussion/155392
-
+- Starger Kernel
+    - https://www.kaggle.com/shonenkov/train-inference-gpu-baseline
+    - https://www.kaggle.com/c/alaska2-image-steganalysis/discussion/155392
 - ❌やっちゃだめなこと
 	- 画像のサイズ変更
 	- Flip & Rotation
@@ -47,6 +54,9 @@ cf. https://www.kaggle.com/c/alaska2-image-steganalysis/discussion/155392
 - ❓不明なこと
 	- YCbCr色空間に関するトレーニング
         - note: JPEGで保存する色はRGBではなくYCbCr
+- References
+    - https://www.kaggle.com/c/alaska2-image-steganalysis/discussion/155392
+
 ---
 
 ## References
@@ -89,6 +99,16 @@ cf. https://www.kaggle.com/c/alaska2-image-steganalysis/discussion/155392
     - env: RTX6000
 - 14: https://www.kaggle.com/c/alaska2-image-steganalysis/discussion/168611
 - 18: https://www.kaggle.com/c/alaska2-image-steganalysis/discussion/168771
+    - Models:
+        - EfficientNet: 
+            - B1(local: 0.918, public: 0.925, private: 0.911)
+            - B2(local: 0.923, public: 0.929, private: 0.916)
+            - B4(local: 0.930, public: 0.940, private: 0.925)
+        - leraning rate: 0.0005
+    - Starter Kernel
+        - https://www.kaggle.com/shonenkov/train-inference-gpu-baseline
+    - env:
+        - V100 GPU: 2.5 hours/epoch
 
 ### 類似コンペ
 
