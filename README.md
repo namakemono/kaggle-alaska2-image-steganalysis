@@ -8,7 +8,9 @@
 - 埋め込むアルゴリズムは3種類
     - JMiPOD
 
+### このコンペの面白い所
 
+- 情報を潰さないようにするために大半のAugmentationが使えない
 ---
 
 ## 評価指標
@@ -39,7 +41,7 @@
 
 ## Tips
 
-- 🚀Starger Kernel
+- 🚀Starter Kernel
     - https://www.kaggle.com/shonenkov/train-inference-gpu-baseline
     - https://www.kaggle.com/c/alaska2-image-steganalysis/discussion/155392
 - ❌やっちゃだめなこと
@@ -65,6 +67,18 @@
 
 ### Top Solutions
 
+| #   | Best Single Model  |
+| --- | ------------------ |
+| 1   | SE ResNet 18       |
+| 2   | EfficientNet B6,7  |
+| 3   | EfficientNet B5    |
+| 4   | |
+| 8   | |
+| 9   | EfficientNet        |
+| 12  | EfficientNet        |
+| 14  | EfficientNet B4,5   |
+| 18  | EfficientNet B1,2,4 |
+
 - 1: https://www.kaggle.com/c/alaska2-image-steganalysis/discussion/168548
     - Models: YCbCrとDCTで学習. SE ResNet 18
         - 8x8のDCTコンポーネント(512x512x3 => 64x64x192にDCT空間に変換)
@@ -88,8 +102,38 @@
         - DCTでの学習
         - ResNet & DenseNet
 - 3: https://www.kaggle.com/c/alaska2-image-steganalysis/discussion/168870
+    - Models:
+        - RGB用とDCT係数用の2種類のモデルを作成
+        - EfficientNet: B5
+        - ❌: RegNet, ResNet, HRNet, PyConv
+    - Augmentations:
+        - Flip, Rotate90 & CutMix
+    - Ensemble:
+        - w/ MLP
+            - RGB用とDCT用のモデルのアンサンブルにMLPを利用
+                - 単なる平均だと性能悪化とのこと
+        - Stacking
+            - 4(元+3種の埋め込みアルゴリズム) x 8(Flip & Rotate90)を特徴量としてLightGBMで最適な重みを算出
+            - cf. https://optuna.readthedocs.io/en/latest/reference/generated/optuna.integration.lightgbm.LightGBMTunerCV.html#optuna.integration.lightgbm.LightGBMTunerCV
+    - Training
+        - validation split: 0.2
 - 4: https://www.kaggle.com/c/alaska2-image-steganalysis/discussion/168537
 - 8: https://www.kaggle.com/c/alaska2-image-steganalysis/discussion/168519
+    - Models
+        - EfficientNet: B0, B3, B4, B7, ResNext
+            - schedular: RduceOnPlateau
+            - loss: CrossEntropy
+            - Optimizer: AdamP, AdamW
+                - cf. https://github.com/clovaai/AdamP
+                - cf. https://arxiv.org/abs/2006.08217
+                - cf. https://www.fast.ai/2018/07/02/adam-weight-decay/
+            - epochs: 100
+            - TTA: 8x
+    - Augmentations
+        - Flip, Rotate90, Cutout, GridShuffle, GridDropout
+            - 特にGridShuffleが効果的
+    - env
+        ColaboratoryのTPUを利用して実験
 - 9: https://www.kaggle.com/c/alaska2-image-steganalysis/discussion/168608
     - Models: EfficientNet x 5
         - stride:(1,1)が重要
@@ -110,8 +154,8 @@
         - 反転+転置+回転+Cutout(1箇所, size: 80)
         - 反転+転置+回転+Cutout(2箇所, size: 64)
     - Training Techniques:
-        - Train:Validation = 8:2
-        - ❓ epoch経過ごとにoptimizerの入れ替え
+        - validation split: 0.2
+        - ❓epochごとにoptimizerの入れ替え
     - TTA
         - 垂直, 水平, 垂直&水平
     - References
@@ -123,7 +167,7 @@
             - B2(local: 0.923, public: 0.929, private: 0.916)
             - B4(local: 0.930, public: 0.940, private: 0.925)
         - leraning rate: 0.0005
-    - Starter Kernel
+    - Base Kernel
         - https://www.kaggle.com/shonenkov/train-inference-gpu-baseline
     - env:
         - V100 GPU: 2.5 hours/epoch
